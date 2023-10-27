@@ -19,14 +19,19 @@
   </div>
   @endif
 
-<form method="POST" action="{{ route('admin.authors.store') }}" class="d-flex">
+<form method="POST" action="{{ route('admin.authors.store') }}">
     @csrf
     
-    <input type="text" name="name" id="name" class="form-control me-sm-2" placeholder="Введите имя автора" required>
-
-    <button type="submit" class="btn btn-success me-sm-2">Добавить</button>
-
+    
+    <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror me-sm-2" placeholder="Введите имя автора" value="{{ old('name') }}">
+    @error('name')
+    <div class="invalid-feedback">
+    {{$message}}
+    </div>
+    @enderror
+    <button type="submit" class="btn btn-success mt-2">Добавить</button>
 </form>
+
 
 <table class="table table-hover">
   <thead>

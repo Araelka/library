@@ -17,10 +17,8 @@ class BookController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $book = Book::with(['author','genres'])->get();
- 
-        return view('admin.books.books', ['data' => $book, 'authors' => Author::all(), 'genres' => Genre::all()]);
+    { 
+        return view('admin.books.books', ['data' => Book::with(['author','genres'])->get(), 'authors' => Author::all(), 'genres' => Genre::all()]);
     }
 
     /**
@@ -28,6 +26,7 @@ class BookController extends Controller
      */
     public function create()
     {
+        // dd(config('type.type'));
         return view('admin.books.book_create',['authors' => Author::all(), 'genres' => Genre::all()]);
     }
 
@@ -36,11 +35,7 @@ class BookController extends Controller
      */
     public function store(BookRequest $request)
     {
-        $book = new Book();
-        $book -> title = $request->input('title');
-        $book -> type = $request->input('type');
-        $book -> author_id = $request->input('author_id');
-        $book->save();
+        $book = Book::create($request->validated());
         
         $book -> genres() -> attach($request->input('genres'));
 
@@ -66,24 +61,19 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        $book = Book::with('author', 'genres')->find($id);
-
-        return view('admin.books.book_update', ['book' => $book, 'authors' => Author::all(), 'genres' => Genre::all()]);
+        return view('admin.books.book_update', ['book' => Book::with('author', 'genres')->find($id), 'authors' => Author::all(), 'genres' => Genre::all()]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(BookRequest $request, $id)
     {
-        $book = new Book;
 
-        $book->where('id','=', $id)->update(['title' => $request->input('title'), 
-        'type' => $request->input('type'), 
-        'author_id' => $request->input('author_id')]);
-
-
-        Book::find($id) -> genres() -> sync($request->input('genres'));
+        $book = Book::find($id);
+        $book -> update($request->validated());;
+        
+        $book -> genres() -> sync($request->input('genres'));
 
         Log::info('Книга ' . $book->title . ' была обновлена');
 
@@ -106,17 +96,15 @@ class BookController extends Controller
         return redirect()->route('admin.books.index');
     }
 
+
+
     public function search(Request $request) {
         
-        $book = Book::with(['author','genres']);
-
-        $book = $book -> where('title', '=', $request->input('search'))->get();
-
+        $book = Book::with(['author','genres'])->where('title', 'like', '%'.$request->search.'%')->paginate();
 
         if(empty($book[0])==false){
-            $book = $book->find($book[0]->id);
 
-            return redirect()->route('admin.books.show', $book->id);
+            return view('admin.books.books', ['data' => $book, 'authors' => Author::all(), 'genres' => Genre::all()]);
 
         }
         else{
@@ -128,9 +116,7 @@ class BookController extends Controller
 
     public function authorFilter($id) {
             
-        $book = Book::with(['author','genres']);
-
-        $book = $book->where('author_id', '=', $id)->get();
+        $book = Book::with(['author','genres'])->where('author_id', '=', $id)->get();
 
         return view('admin.books.books', ['data' => $book, 'authors' => Author::all(), 'genres' => Genre::all()]);
 

@@ -1,12 +1,11 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BookController;
-use App\Http\Controllers\AuthorController;
-use App\Http\Controllers\GenreController;
+use App\Http\Controllers\Api\AuthorController;
+use App\Http\Controllers\Api\BookController;
+use App\Http\Controllers\Api\GenreController;
+use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\Book;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,44 +19,21 @@ use App\Models\Book;
 */
 
 
-// Route::get('/', function()  {
-//     return view('home');
-// })->name('home');
+
+
+Route::post('login/process', [AuthController::class,'login'])->name('login.process');
+
+Route::resource('books', BookController::class)->only('index','show');
+Route::resource('authors', AuthorController::class)->only('index','show');
+Route::resource('genres', GenreController::class)->only('index');
 
 
 
-// Route::middleware('auth')->group(function () {
+Route::middleware('auth:sanctum')->group(function (){
 
-//         Route::get('logout', [AuthController::class,'logout'])->name('logout');
-
-// });
-
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-
-Route::middleware('guest')->group(function () {
-
-    Route::get('books', [BookController::class,'index'])->name('books.index');
-
-    Route::get('book/{id}', [BookController::class,'show'])->name('books.show');
-
-    Route::get('authors', [AuthorController::class,'index'])->name('authors.index');
-
-    Route::get('author/{id}', [AuthorController::class,'show'])->name('authors.show');
-
-    Route::get('genres', [GenreController::class,'index'])->name('genres.index');
+    Route::resource('books', BookController::class)->only('update','destroy');
+    Route::resource('authors', AuthorController::class)->only('update');
     
-
-    Route::get('register', [AuthController::class,'showRegister'])->name('register');
-
-    Route::get('login/show', function()  {
-        return view('auth/login_token');
-    })->name('login.show');
-
-    Route::post('login/token', [AuthController::class,'loginToken'])->name('login.token');
-
-    Route::post('register/process', [AuthController::class,'register'])->name('register.process');
 });
+
 

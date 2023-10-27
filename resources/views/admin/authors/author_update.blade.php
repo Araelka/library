@@ -17,7 +17,12 @@
 
     <div class="form-group mt-2">
     <label for="name">Имя автора:</label>
-    <input type="text" name="name" id="name" class="form-control" value="{{ $author->name }}">
+    <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ $author->name }}">
+    @error('name')
+    <div class="invalid-feedback">
+    {{$message}}
+    </div>
+    @enderror
 
     <button type="submit" class="btn btn-success mt-2">Сохранить</button>
     </div>

@@ -23,31 +23,14 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="{{ route('login.show') }}">Получить данные входа
-            <span class="visually-hidden">(current)</span>
-          </a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link active" href="{{ route('admin.login') }}">Админ панель
             <span class="visually-hidden">(current)</span>
           </a>
         </li>
       </ul>
-
-      @if(auth()->check())
-      <div class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ auth()->user()->name }}</a>
-      <div class="dropdown-menu" style="">
-        <a class="dropdown-item" href="{{ route('author.update') }}">Редактировать</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="{{ route('logout') }}">Выйти</a>
-      </div>
-</div>
-      @else
-      <a href="{{ route('login') }}" class="nav-link" >Войти</a>
-      @endif
-
-
+      <a class="nav-link active" href="{{ route('login') }}">Войти
+            <span class="visually-hidden">(current)</span>
+          </a>
         
     </div>
   </div>

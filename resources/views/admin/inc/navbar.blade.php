@@ -34,30 +34,9 @@
         <a class="dropdown-item" href="{{ route('admin.logout') }}">Выйти</a>
       </div>
 </div>
-        <!-- <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-        <button type="button" class="btn btn-secondary">{{ auth()->guard('admin')->user()->name }}</button>
-        <div class="btn-group" role="group">
-          <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-          <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-            <a class="dropdown-item" href="#">Редактировать</a>
-            <a class="dropdown-item" href="{{ route('admin.logout') }}">Выйти</a>
-          </div>
-        </div>
-      </div> -->
+
       @endif
 
-
-
-        <!-- <form class="d-flex" method="get" action="{{ route('admin.logout') }}">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Выйти</button>
-        </form> -->
-        
-
-        <!-- @guest('admin')
-        <form class="d-flex" method="get" action="{{ route('admin.login') }}">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Войти</button>
-        </form>
-        @endguest -->
 
     </div>
   </div>

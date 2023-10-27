@@ -22,15 +22,15 @@ class AuthRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['unique:users,email'],
-            'password' => ['min:6', 'confirmed']
+            'email' => ['unique:users,email','email','required'],
+            'password' => ['min:6', 'required','confirmed']
         ];
     }
 
     public function  messages() {
         return [
-            'email' => ['unique' => 'Пользователь с такой почтой уже существует'],
-            'password' => ['min' => 'Длина пароля меньше 6 символов', 'confirmed' => 'Пароли не совадают']
+            'email' => ['unique' => 'Пользователь с такой почтой уже существует', 'email'=> 'Некорректно указана почта', 'required' => 'Не указана почта'],
+            'password' => ['min' => 'Длина пароля меньше 6 символов', 'confirmed' => 'Пароли не совадают', 'required' => 'Не введён пароль']
         ];
     }
 }

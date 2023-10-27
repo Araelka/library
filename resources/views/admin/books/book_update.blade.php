@@ -21,7 +21,7 @@
 
     <div class="form-group mt-2">
     <label for="title">Название книги:</label>
-    <input type="text" name="title" id="title" value="{{ $book->title }}" class="form-control @error('title') is-invalid @enderror" required>
+    <input type="text" name="title" id="title" value="{{ $book->title }}" class="form-control @error('title') is-invalid @enderror">
     @error('title')
     <div class="invalid-feedback">
     {{$message}}
@@ -33,9 +33,9 @@
     <div class="form-group mt-2">
     <label for="type">Тип издания:</label>
     <select name="type" id="type" class="form-select">
-        <option value="Графическое издание" @if ($book->type == "Графическое издание") selected @endif>Графическое издание</option>
-        <option value="Цифровое издание" @if ($book->type == "Цифровое издание") selected @endif>Цифровое издание</option>
-        <option value="Печатное издание" @if ($book->type == 'Печатное издание') selected @endif>Печатное издание</option>
+    @foreach(config('type.type') as $type)
+        <option value="{{$type}}" @if ($book->type == $type) selected @endif>{{ $type }}</option>
+        @endforeach
     </select>
     </div>
 
@@ -51,11 +51,16 @@
 
     <div class="form-group mt-2">
     <label for="genres">Жанры:</label>
-    <select name="genres[]" id="genres" class="form-select" multiple required>
+    <select name="genres[]" id="genres" class="form-select" multiple>
         @foreach ($genres as $genre)
             <option value="{{ $genre->id }}" @if (in_array($genre->id, $book->genres->pluck('id')->toArray())) selected @endif>{{ $genre->name }}</option>
         @endforeach
     </select>
+    @error('genres')
+    <div class="invalid-feedback">
+    {{$message}}
+    </div>
+    @enderror
     </div>
 
     <div class="form-group mt-2">

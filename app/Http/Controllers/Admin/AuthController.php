@@ -27,7 +27,6 @@ class AuthController extends Controller
             auth('admin')->logout();
         }
 
-
         return view('admin.auth.login')->withErrors(['login' => 'Неверный логин или пароль']);
 
     }

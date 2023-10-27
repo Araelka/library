@@ -22,8 +22,7 @@
 
 
 
-<form class="d-flex" method="POST" action="{{ route('admin.books.search') }}">
-    @csrf
+<form class="d-flex" method="get" action="{{ route('admin.books.search') }}">
     <input class="form-control me-sm-2" type="search" name="search" id="search" placeholder="Поиск">
     <button class="btn btn-secondary my-2 my-sm-0" type="submit">Найти</button>
 </form>

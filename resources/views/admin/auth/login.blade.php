@@ -23,10 +23,12 @@
 
     <div class="form-group mt-2">
     <label for="email">Email:</label>
-    <input type="email" name="email" id="email" class="form-control" required>
+    <input type="email" name="email" id="email" class="form-control">
+ 
 
     <label for="password">Пароль:</label>
-    <input type="password" name="password" id="password" class="form-control" required>
+    <input type="password" name="password" id="password" class="form-control">
+
 
     <button type="submit" class="btn btn-success mt-2">Войти</button>
     </div>

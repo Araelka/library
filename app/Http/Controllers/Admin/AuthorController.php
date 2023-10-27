@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AuthorRequest;
 use Illuminate\Http\Request;
 use App\Models\Author;
 
@@ -13,9 +14,7 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        $author = Author::withCount('books')->get();
-
-        return view('admin.authors.authors', ['authors' => $author]);
+        return view('admin.authors.authors', ['authors' => Author::withCount('books')->get()]);
     }
 
     /**
@@ -29,7 +28,7 @@ class AuthorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AuthorRequest $request)
     {
         $author = new Author();
 
@@ -54,19 +53,16 @@ class AuthorController extends Controller
      */
     public function edit($id)
     {
-        $author = Author::find($id);
 
-        return view('admin.authors.author_update', ['author' => $author]);
+        return view('admin.authors.author_update', ['author' => Author::find($id)]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(AuthorRequest $request, $id)
     {
-        $author = new Author();
-
-        $author->where('id','=', $id)->update(['name' => $request->input('name')]);
+        Author::find($id)->update($request->validated());
 
         return redirect()->route('admin.authors.index')->with(['success' => 'Данные успешно обновлены']);
     }

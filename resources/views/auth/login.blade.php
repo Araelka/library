@@ -14,7 +14,6 @@
 <div  id="error-message"></div>
 
 
-
 <form id="loginForm" method="POST" action="{{  route('login.process') }}">
     @csrf
 
@@ -29,7 +28,6 @@
     </div>
     
 </form>
-<a href="{{ route('register') }}"><button type="submit" class="btn btn-secondary mt-2">Зарегестрироваться</button></a>
 
 
 

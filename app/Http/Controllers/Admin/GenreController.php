@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GenreRequest;
 use Illuminate\Http\Request;
 use App\Models\Genre;
 
@@ -13,9 +14,7 @@ class GenreController extends Controller
      */
     public function index()
     {
-        $genre = new Genre();
-
-        return view('admin.genres.genres', ['genres' => $genre::all()]);
+        return view('admin.genres.genres', ['genres' => Genre::all()]);
     }
 
     /**
@@ -29,14 +28,10 @@ class GenreController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(GenreRequest $request)
     {
-        $genre = new Genre();
-
-        $genre -> name = $request->input('name');
-
-        $genre->save();
-
+        Genre::create($request->validated());
+        
         return redirect()->route('admin.genres.index')->with(['success' => "Жарн успешно добавлен"]);
     }
 
@@ -59,11 +54,10 @@ class GenreController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(GenreRequest $request, $id)
     {
-        $genre = new Genre;
 
-        $genre->where('id','=', $id)->update(['name' => $request->input('name')]);
+        Genre::find($id)->update( $request->validated() );
 
         return redirect()->route('admin.genres.index')->with(['success' => "Данные успешно обновлены"]);
     }

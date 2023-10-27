@@ -18,13 +18,18 @@
   </div>
 @endif
 
-<form method="POST" action="{{ route('admin.genres.store') }}" class="d-flex">
+<form method="POST" action="{{ route('admin.genres.store') }}">
     @csrf
 
 
-    <input type="text" name="name" id="name" class="form-control me-sm-2" placeholder="Введите название жанра" value="{{ old('name') }}" required>
+    <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror me-sm-2" placeholder="Введите название жанра" value="{{ old('name') }}">
+    @error('name')
+    <div class="invalid-feedback">
+    {{$message}}
+    </div>
+    @enderror
 
-    <button type="submit" class="btn btn-success me-sm-2">Добавить</button>
+    <button type="submit" class="btn btn-success mt-2">Добавить</button>
 
 </form>
 

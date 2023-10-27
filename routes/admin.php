@@ -33,7 +33,7 @@ Route::middleware('auth:admin')->group(function(){
 
     Route::resource('books', BookController::class);
 
-    Route::post('books/search', [BookController::class,'search'])->name('books.search');
+    Route::get('search', [BookController::class,'search'])->name('books.search');
 
     Route::get('books/authorFilter/{id}', [BookController::class,'authorFilter'])->name('books.authorFilter');
 

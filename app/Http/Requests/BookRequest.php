@@ -22,13 +22,19 @@ class BookRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['unique:books,title']
+            'title' => ['unique:books,title','required'],
+            'type' => ['required', ],
+            'author_id' =>  ['required'],
+            'genres'=> ['required']
         ];
     }
 
     public function  messages() {
         return [
-            'title' => ['unique' => 'Книга с таким названием уже существует']
+            'title' => ['unique' => 'Книга с таким названием уже существует', 'required' => 'Название книги не заполнено'],
+            'type'=> ['required' => 'Тип издания не заполнен'],
+            'author_id' => ['required' => 'Автор не указан'],
+            'genres' => ['required' => 'Жанры книги не выбраны'],
         ];
     }
 }
